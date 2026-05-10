@@ -3,7 +3,8 @@ pipeline {
 
     environment {
         APP_NAME = 'auth-lab4'
-        BUILD_DIR = 'target'   // or 'build', 'dist' for your project
+        // For Next.js/Vite, the build output is usually 'out' or '.next' or 'dist'
+        BUILD_DIR = '.next' 
     }
 
     stages {
@@ -14,34 +15,28 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Install & Build') {
             steps {
-                echo 'Building the project...'
-                // Maven:  sh 'mvn clean package -DskipTests'
-                // Gradle: sh './gradlew build'
-                // npm:    sh 'npm install && npm run build'
-                sh 'echo Build step — replace with your command'
+                echo 'Installing dependencies and building...'
+                // Changed 'sh' to 'bat' for Windows compatibility
+                bat 'npm install'
+                bat 'npm run build'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                // Maven:  sh 'mvn test'
-                // npm:    sh 'npm test'
-                sh 'echo Test step — replace with your command'
-            }
-            post {
-                always {
-                    junit '**/target/surefire-reports/*.xml'
-                }
+                // Using 'bat' and ensuring it doesn't crash if tests aren't set up yet
+                bat 'echo No tests specified, skipping...' 
             }
         }
 
         stage('Archive') {
             steps {
                 echo 'Archiving build artifacts...'
-                archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
+                // Adjusted path for web projects; allowEmptyArchive avoids failure if folder is missing
+                archiveArtifacts artifacts: '**/.next/**', allowEmptyArchive: true
             }
         }
     }
@@ -51,8 +46,7 @@ pipeline {
             echo 'Pipeline completed successfully!'
         }
         failure {
-            echo 'Pipeline FAILED — check the logs above.'
+            echo 'Pipeline FAILED — check the Console Output for details.'
         }
     }
 }
-
