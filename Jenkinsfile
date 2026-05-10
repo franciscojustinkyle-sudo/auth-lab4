@@ -12,7 +12,6 @@ pipeline {
         stage('Environment Check') {
             steps {
                 echo 'Checking Node version...'
-                // Using '|| ver' ensures the command returns success even if npm is missing
                 bat 'npm -v || ver' 
             }
         }
@@ -23,11 +22,30 @@ pipeline {
                 bat 'echo Build Successful'
             }
         }
+
+        stage('Archive') {
+            steps {
+                echo 'Archiving build artifacts...'
+                // This saves your files in Jenkins so you can download them later
+                archiveArtifacts artifacts: '**/*', allowEmptyArchive: true
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying to local server...'
+                // Using 'bat' for Windows compatibility instead of 'sh'
+                bat 'echo Deploying application to C:\\Users\\Justin Kyle Francisc\\Documents\\deployed-app'
+            }
+        }
     }
 
     post {
         success {
             echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline FAILED — check the logs above.'
         }
     }
 }
