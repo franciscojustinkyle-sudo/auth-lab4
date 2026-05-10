@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         APP_NAME = 'auth-lab4'
-        // For Next.js/Vite, the build output is usually 'out' or '.next' or 'dist'
         BUILD_DIR = '.next' 
     }
 
@@ -18,16 +17,15 @@ pipeline {
         stage('Install & Build') {
             steps {
                 echo 'Installing dependencies and building...'
-                // Changed 'sh' to 'bat' for Windows compatibility
-                bat 'npm install'
-                bat 'npm run build'
+                // Use 'call' so Jenkins continues to the next line
+                bat 'call npm install'
+                bat 'call npm run build'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                // Using 'bat' and ensuring it doesn't crash if tests aren't set up yet
                 bat 'echo No tests specified, skipping...' 
             }
         }
@@ -35,8 +33,8 @@ pipeline {
         stage('Archive') {
             steps {
                 echo 'Archiving build artifacts...'
-                // Adjusted path for web projects; allowEmptyArchive avoids failure if folder is missing
-                archiveArtifacts artifacts: '**/.next/**', allowEmptyArchive: true
+                // Using a simpler path for archiving to avoid depth issues
+                archiveArtifacts artifacts: '.next/**', allowEmptyArchive: true
             }
         }
     }
