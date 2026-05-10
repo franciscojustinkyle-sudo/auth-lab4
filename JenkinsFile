@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         APP_NAME = 'auth-lab4'
+        BUILD_DIR = 'target'   // or 'build', 'dist' for your project
     }
 
     stages {
@@ -16,22 +17,23 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                // This creates a dummy file so the Archive stage doesn't fail
-                sh 'mkdir -p target && echo "build success" > target/build-info.txt'
-                sh 'echo Build step completed'
+                // Maven:  sh 'mvn clean package -DskipTests'
+                // Gradle: sh './gradlew build'
+                // npm:    sh 'npm install && npm run build'
+                sh 'echo Build step — replace with your command'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'echo Tests passed'
+                // Maven:  sh 'mvn test'
+                // npm:    sh 'npm test'
+                sh 'echo Test step — replace with your command'
             }
             post {
                 always {
-                    // WARNING: Commented out to prevent failure due to missing reports
-                    // junit '**/target/surefire-reports/*.xml'
-                    echo 'Skipping junit check for Checkpoint 1E'
+                    junit '**/target/surefire-reports/*.xml'
                 }
             }
         }
@@ -39,14 +41,18 @@ pipeline {
         stage('Archive') {
             steps {
                 echo 'Archiving build artifacts...'
-                // Archiving the dummy file we created in the Build stage
-                archiveArtifacts artifacts: 'target/*.txt', allowEmptyArchive: true
+                archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
             }
         }
     }
 
     post {
-        success { echo 'Finished: SUCCESS' }
-        failure { echo 'Finished: FAILURE' }
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline FAILED — check the logs above.'
+        }
     }
 }
+
