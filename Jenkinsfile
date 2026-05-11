@@ -40,10 +40,10 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline completed successfully! Handshake with GitHub is now active.'
+            echo 'Pipeline completed successfully!'
         }
         failure {
             echo 'Pipeline FAILED — check the syntax or logs.'
         }
     }
-}git add Jenkinsfile
+}
