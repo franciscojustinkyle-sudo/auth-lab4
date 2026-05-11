@@ -46,4 +46,4 @@ pipeline {
             echo 'Pipeline FAILED — check the syntax or logs.'
         }
     }
-}
+}git add Jenkinsfile
