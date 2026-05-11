@@ -40,7 +40,7 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline completed successfully!'
+            echo 'Pipeline completed successfully! Handshake with GitHub is now active.'
         }
         failure {
             echo 'Pipeline FAILED — check the syntax or logs.'
