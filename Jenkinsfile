@@ -23,7 +23,7 @@ pipeline {
                 bat 'echo Build Successful'
             }
         }
-// v4
+// Build Version: 4
         stage('Archive') {
             steps {
                 echo 'Archiving build artifacts...'
