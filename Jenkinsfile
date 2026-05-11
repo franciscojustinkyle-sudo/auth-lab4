@@ -1,4 +1,4 @@
-// Build Version: 1
+// v1
 pipeline {
     agent any
 
