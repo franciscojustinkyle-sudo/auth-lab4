@@ -16,7 +16,7 @@ pipeline {
                 bat 'npm -v || ver' 
             }
         }
-// v3
+// Build Version: 3
         stage('Build & Test') {
             steps {
                 echo 'Simulating Build and Test...'
