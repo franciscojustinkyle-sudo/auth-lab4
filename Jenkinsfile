@@ -9,7 +9,7 @@ pipeline {
                 checkout scm
             }
         }
-// v2
+// Build Version: 2
         stage('Environment Check') {
             steps {
                 echo 'Checking Node version...'
