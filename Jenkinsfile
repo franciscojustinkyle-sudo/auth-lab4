@@ -23,14 +23,14 @@ pipeline {
                 bat 'echo Build Successful'
             }
         }
-
+// v4
         stage('Archive') {
             steps {
                 echo 'Archiving build artifacts...'
                 archiveArtifacts artifacts: '**/*', allowEmptyArchive: true
             }
         }
-
+// v5
         stage('Deploy') {
             steps {
                 echo 'Deploying to local server...'
