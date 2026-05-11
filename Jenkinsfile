@@ -30,7 +30,7 @@ pipeline {
                 archiveArtifacts artifacts: '**/*', allowEmptyArchive: true
             }
         }
-// v5
+// Build Version: 5
         stage('Deploy') {
             steps {
                 echo 'Deploying to local server...'
